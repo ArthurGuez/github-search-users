@@ -8,21 +8,35 @@ export default function useSearchGitHubUsers(query: string) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!query.trim()) {
+      setUsers(null);
+      setError(null);
+      setIsLoading(false);
+
+      return;
+    }
+
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
 
       try {
-        const foundUsers = await searchUsers(query);
-        setUsers(foundUsers);
+        const result = await searchUsers(query);
+
+        if (result.success) {
+          setUsers(result.data);
+        } else {
+          setError(result.error);
+        }
       } catch {
         setError("Failed to fetch users");
+        setUsers(null);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchData().catch(console.error);
+    void fetchData();
   }, [query]);
 
   return { users, isLoading, error };
