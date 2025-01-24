@@ -1,5 +1,6 @@
 import "./App.css";
 import Card from "./components/Card";
+import Header from "./components/Header";
 import useSearchGitHubUsers from "./hooks/useSearchGitHubUsers";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <div>
+      <Header />
       <main className="layout">
         <div>
           <div>Search input</div>
