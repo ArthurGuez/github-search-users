@@ -26,12 +26,18 @@ export async function searchUsers(query: string): Promise<SearchUsersResult> {
 
     if (!response.ok) {
       if (response.status === 403) {
-        const resetTime = response.headers.get("X-RateLimit-Reset");
-        const date = new Date(Number(resetTime) * 1000);
+        const resetTime = new Date(
+          Number(response.headers.get("X-RateLimit-Reset")) * 1_000
+        );
+        const currentTime = new Date();
+        const timeRemaining = resetTime.getTime() - currentTime.getTime();
+        const secondsLeft = Math.floor(
+          (timeRemaining % 60_000) / 1_000
+        ).toString();
 
         return {
           success: false,
-          error: `Rate limit exceeded. Try again at: ${date.toLocaleString()}`,
+          error: `⚠️ Oops! You've hit the rate limit.⏳ Please wait ${secondsLeft} seconds.`,
         };
       }
 

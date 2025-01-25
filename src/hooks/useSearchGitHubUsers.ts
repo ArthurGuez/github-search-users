@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import type { GitHubUser } from "../services/search-users";
 import { searchUsers } from "../services/search-users";
+import { useDebounce } from "./useDebounce";
 
 export default function useSearchGitHubUsers(query: string) {
   const [users, setUsers] = useState<GitHubUser[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const debouncedQuery = useDebounce(query);
 
   useEffect(() => {
-    if (!query.trim()) {
+    if (!debouncedQuery.trim()) {
       setUsers(null);
       setError(null);
       setIsLoading(false);
@@ -21,7 +23,7 @@ export default function useSearchGitHubUsers(query: string) {
       setError(null);
 
       try {
-        const result = await searchUsers(query);
+        const result = await searchUsers(debouncedQuery);
 
         if (result.success) {
           setUsers(result.data);
@@ -37,7 +39,7 @@ export default function useSearchGitHubUsers(query: string) {
     };
 
     void fetchData();
-  }, [query]);
+  }, [debouncedQuery]);
 
   return { users, isLoading, error };
 }
