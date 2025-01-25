@@ -1,0 +1,12 @@
+#root {
+  margin: 0 auto;
+}
+
+.layout {
+  padding: 0 20px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+}

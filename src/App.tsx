@@ -1,36 +1,34 @@
-import "./App.css";
-import Card from "./components/Card";
-import Header from "./components/Header";
-import useSearchGitHubUsers from "./hooks/useSearchGitHubUsers";
+import { useState } from "react";
+import Header from "./components/Header/Header";
+import UserList from "./components/UserList/UserList";
+
+import styles from "./App.module.css";
 
 function App() {
-  const { users, isLoading, error } = useSearchGitHubUsers("ArthurG");
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (!users || users.length === 0) {
-    return <p>No user found</p>;
-  }
+  const [query, setQuery] = useState("Arthur");
 
   return (
     <div>
       <Header />
-      <main className="layout">
+      <main className={styles.layout}>
         <div>
-          <div>Search input</div>
-          <div>Actions</div>
+          <div>
+            <label>
+              Search albums:
+              <input
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                }}
+              />
+            </label>
+          </div>
+          <div className={styles.actions}>
+            <div>Elements selected</div>
+            <div>Actions</div>
+          </div>
         </div>
-        <div className="cards">
-          {users.map((user) => (
-            <Card key={user.id} user={user} />
-          ))}
-        </div>
+        <UserList query={query} />
       </main>
     </div>
   );
