@@ -29,6 +29,18 @@
   background-color: #00a4ff;
 }
 
+.card-checkbox:checked::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 1px;
+  width: 4px;
+  height: 7px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
 .card-content {
   display: flex;
   flex-direction: column;

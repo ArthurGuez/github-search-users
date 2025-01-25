@@ -10,11 +10,13 @@ export default function Card({ user }: Props) {
   return (
     <div className={styles.card}>
       <div className={styles.cardLayout}>
+        <label htmlFor={`profile-${user.id.toString()}`}></label>
         <input
+          aria-label={`Select profile of ${user.login}`}
           className={styles.cardCheckbox}
           type="checkbox"
           name="profile"
-          id=""
+          id={`profile-${user.id.toString()}`}
         />
         <div className={styles.cardContent}>
           <img
