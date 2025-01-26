@@ -1,21 +1,20 @@
-import type { GitHubUser } from "../../services/search-users";
+import type { SelectableGitHubUser } from "../../contexts/GitHubUsersContext";
 import Checkbox from "../Checkbox/Checkbox";
 
 import styles from "./UserCard.module.css";
 
 interface Props {
-  isSelected: boolean;
   toggleSelect: () => void;
-  user: GitHubUser;
+  user: SelectableGitHubUser;
 }
 
-export default function UserCard({ user, isSelected, toggleSelect }: Props) {
+export default function UserCard({ user, toggleSelect }: Props) {
   return (
     <div className={styles.userCard}>
       <div className={styles.userCardLayout}>
         <Checkbox
           ariaLabel={`Select profile of ${user.login}`}
-          checked={isSelected}
+          checked={user.isSelected}
           id={`profile-${user.id.toString()}`}
           isInTopLeftCorner
           onChange={toggleSelect}

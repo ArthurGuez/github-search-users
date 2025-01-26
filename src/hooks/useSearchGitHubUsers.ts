@@ -26,7 +26,12 @@ export default function useSearchGitHubUsers(query: string) {
         const result = await searchUsers(debouncedQuery);
 
         if (result.success) {
-          setGitHubUsers(result.data);
+          setGitHubUsers(
+            result.data.map((user) => ({
+              ...user,
+              isSelected: false,
+            }))
+          );
         } else {
           setError(result.error);
         }

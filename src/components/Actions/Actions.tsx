@@ -1,4 +1,4 @@
-import copyIcon from "../../assets/copy.svg";
+import duplicateIcon from "../../assets/duplicate.svg";
 import binIcon from "../../assets/bin.svg";
 
 import styles from "./Actions.module.css";
@@ -13,18 +13,26 @@ interface Props {
 export default function Actions({ onResetUsers }: Props) {
   const {
     gitHubUsers,
-    selectedGitHubUsers,
     setGitHubUsers,
     toggleSelectAllGitHubUsers,
+    removeSelectedUsers,
   } = useGitHubUsersContext();
-  const selectedGitHubUsersCount = selectedGitHubUsers.length;
+
+  const selectedGitHubUsersCount =
+    gitHubUsers?.reduce((prev, user) => {
+      if (user.isSelected) {
+        return (prev += 1);
+      }
+
+      return prev;
+    }, 0) ?? 0;
+
   const checkboxRef = useRef<HTMLInputElement | null>(null);
 
-  const areSomeGitHubUsersSelected =
-    (gitHubUsers &&
-      selectedGitHubUsers.length > 0 &&
-      gitHubUsers.length > selectedGitHubUsers.length) ??
-    false;
+  const areSomeGitHubUsersSelected = gitHubUsers
+    ? selectedGitHubUsersCount > 0 &&
+      selectedGitHubUsersCount < gitHubUsers.length
+    : false;
 
   useEffect(() => {
     if (checkboxRef.current) {
@@ -32,12 +40,20 @@ export default function Actions({ onResetUsers }: Props) {
     }
   }, [areSomeGitHubUsersSelected]);
 
+  function handleDeleteUsers() {
+    removeSelectedUsers();
+
+    if (gitHubUsers?.length === selectedGitHubUsersCount) {
+      onResetUsers();
+    }
+  }
+
   return (
     <div className={styles.actions}>
       <div className={styles.actionsCheckboxContainer}>
         <Checkbox
           ariaLabel="Select all profiles"
-          checked={gitHubUsers?.length === selectedGitHubUsers.length}
+          checked={gitHubUsers?.length === selectedGitHubUsersCount}
           disabled={!gitHubUsers}
           id="select-all"
           onChange={toggleSelectAllGitHubUsers}
@@ -48,17 +64,23 @@ export default function Actions({ onResetUsers }: Props) {
         {selectedGitHubUsersCount > 1 ? "s" : ""} selected
       </div>
       <div className={styles.actionButtons}>
-        <img src={copyIcon} alt="Copy" width={23} height={23} />
-        <img
+        <button
           onClick={() => {
             setGitHubUsers(null);
             onResetUsers();
           }}
-          src={binIcon}
-          alt="Delete"
-          width={23}
-          height={23}
-        />
+          className={styles.actionButton}
+          aria-label="Duplicate selected users"
+        >
+          <img src={duplicateIcon} alt="Duplicate" width={23} height={23} />
+        </button>
+        <button
+          onClick={handleDeleteUsers}
+          className={styles.actionButton}
+          aria-label="Delete selected users"
+        >
+          <img src={binIcon} alt="Delete" width={23} height={23} />
+        </button>
       </div>
     </div>
   );

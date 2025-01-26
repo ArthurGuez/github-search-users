@@ -1,13 +1,17 @@
-import type { ReactNode } from "react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 import { createContext, useCallback, useContext, useState } from "react";
 import type { GitHubUser } from "../services/search-users";
 
+export interface SelectableGitHubUser extends GitHubUser {
+  isSelected: boolean;
+}
+
 interface GitHubUsersContextType {
-  gitHubUsers: GitHubUser[] | null;
-  selectedGitHubUsers: number[];
-  setGitHubUsers: (users: GitHubUser[] | null) => void;
+  gitHubUsers: SelectableGitHubUser[] | null;
+  setGitHubUsers: Dispatch<SetStateAction<SelectableGitHubUser[] | null>>;
   toggleSelectAllGitHubUsers: () => void;
   toggleGitHubUserSelection: (userId: number) => void;
+  removeSelectedUsers: () => void;
 }
 
 const GitHubUsersContext = createContext<GitHubUsersContextType | undefined>(
@@ -31,37 +35,70 @@ export default function GitHubUsersProvider({
 }: {
   children: ReactNode;
 }) {
-  const [gitHubUsers, setGitHubUsers] = useState<GitHubUser[] | null>(null);
-  const [selectedGitHubUsers, setSelectedGitHubUsers] = useState<number[]>([]);
+  const [gitHubUsers, setGitHubUsers] = useState<SelectableGitHubUser[] | null>(
+    null
+  );
 
-  const toggleGitHubUserSelection = useCallback((userId: number) => {
-    setSelectedGitHubUsers((prevState) => {
-      if (prevState.includes(userId)) {
-        return prevState.filter((id) => id !== userId);
+  function removeSelectedUsers() {
+    setGitHubUsers((prevState) => {
+      if (!prevState) {
+        return null;
       }
 
-      return [...prevState, userId];
+      const newState = prevState.filter((gitHubUser) => !gitHubUser.isSelected);
+
+      if (newState.length === 0) {
+        return null;
+      }
+
+      return newState;
+    });
+  }
+
+  const toggleGitHubUserSelection = useCallback((userId: number) => {
+    setGitHubUsers((prevState) => {
+      if (!prevState) {
+        return null;
+      }
+
+      const userIndex = prevState.findIndex((user) => user.id === userId);
+
+      if (userIndex === -1) {
+        return prevState;
+      }
+
+      const updatedUsers = [...prevState];
+      updatedUsers[userIndex] = {
+        ...updatedUsers[userIndex],
+        isSelected: !updatedUsers[userIndex].isSelected,
+      };
+
+      return updatedUsers;
     });
   }, []);
 
   function toggleSelectAllGitHubUsers() {
-    if (!gitHubUsers) {
-      return;
-    } else if (gitHubUsers.length === selectedGitHubUsers.length) {
-      setSelectedGitHubUsers([]);
-    } else {
-      setSelectedGitHubUsers(gitHubUsers.map(({ id }) => id));
-    }
+    setGitHubUsers((prevState) => {
+      if (!prevState) {
+        return null;
+      }
+
+      if (prevState.every((user) => user.isSelected)) {
+        return prevState.map((user) => ({ ...user, isSelected: false }));
+      }
+
+      return prevState.map((user) => ({ ...user, isSelected: true }));
+    });
   }
 
   return (
     <GitHubUsersContext.Provider
       value={{
         gitHubUsers,
-        selectedGitHubUsers,
         setGitHubUsers,
         toggleGitHubUserSelection,
         toggleSelectAllGitHubUsers,
+        removeSelectedUsers,
       }}
     >
       {children}

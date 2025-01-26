@@ -10,8 +10,7 @@ interface Props {
 
 export default function UserList({ query }: Props) {
   const { gitHubUsers, isLoading, error } = useSearchGitHubUsers(query);
-  const { toggleGitHubUserSelection, selectedGitHubUsers } =
-    useGitHubUsersContext();
+  const { toggleGitHubUserSelection } = useGitHubUsersContext();
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -35,7 +34,6 @@ export default function UserList({ query }: Props) {
         <UserCard
           key={gitHubUser.id}
           user={gitHubUser}
-          isSelected={selectedGitHubUsers.includes(gitHubUser.id)}
           toggleSelect={() => {
             toggleGitHubUserSelection(gitHubUser.id);
           }}
