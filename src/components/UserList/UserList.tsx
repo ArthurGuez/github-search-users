@@ -20,12 +20,16 @@ export default function UserList({ query }: Props) {
     return <p>{error}</p>;
   }
 
-  if (!gitHubUsers || gitHubUsers.length === 0) {
+  if (!gitHubUsers) {
+    return <p>You search results will be displayed here</p>;
+  }
+
+  if (gitHubUsers.length === 0) {
     return <p>No user found</p>;
   }
 
   return (
-    <div className={styles.cards}>
+    <div className={styles.userList}>
       {gitHubUsers.map((gitHubUser) => (
         <UserCard
           key={gitHubUser.id}
