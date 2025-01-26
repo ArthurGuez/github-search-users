@@ -32,10 +32,10 @@ export default function UserList({ query }: Props) {
     <div className={styles.userList}>
       {gitHubUsers.map((gitHubUser) => (
         <UserCard
-          key={gitHubUser.id}
+          key={gitHubUser.uniqueId ?? gitHubUser.id}
           user={gitHubUser}
           toggleSelect={() => {
-            toggleGitHubUserSelection(gitHubUser.id);
+            toggleGitHubUserSelection(gitHubUser.uniqueId ?? gitHubUser.id);
           }}
         />
       ))}

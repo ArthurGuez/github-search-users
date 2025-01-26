@@ -12,20 +12,14 @@ interface Props {
 
 export default function Actions({ onResetUsers }: Props) {
   const {
+    duplicateSelectedUsers,
     gitHubUsers,
-    setGitHubUsers,
-    toggleSelectAllGitHubUsers,
     removeSelectedUsers,
+    toggleSelectAllGitHubUsers,
   } = useGitHubUsersContext();
 
   const selectedGitHubUsersCount =
-    gitHubUsers?.reduce((prev, user) => {
-      if (user.isSelected) {
-        return (prev += 1);
-      }
-
-      return prev;
-    }, 0) ?? 0;
+    gitHubUsers?.filter((user) => user.isSelected).length ?? 0;
 
   const checkboxRef = useRef<HTMLInputElement | null>(null);
 
@@ -66,8 +60,7 @@ export default function Actions({ onResetUsers }: Props) {
       <div className={styles.actionButtons}>
         <button
           onClick={() => {
-            setGitHubUsers(null);
-            onResetUsers();
+            duplicateSelectedUsers();
           }}
           className={styles.actionButton}
           aria-label="Duplicate selected users"

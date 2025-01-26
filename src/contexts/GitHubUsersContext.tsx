@@ -4,14 +4,16 @@ import type { GitHubUser } from "../services/search-users";
 
 export interface SelectableGitHubUser extends GitHubUser {
   isSelected: boolean;
+  uniqueId?: string;
 }
 
 interface GitHubUsersContextType {
+  duplicateSelectedUsers: () => void;
   gitHubUsers: SelectableGitHubUser[] | null;
-  setGitHubUsers: Dispatch<SetStateAction<SelectableGitHubUser[] | null>>;
-  toggleSelectAllGitHubUsers: () => void;
-  toggleGitHubUserSelection: (userId: number) => void;
   removeSelectedUsers: () => void;
+  setGitHubUsers: Dispatch<SetStateAction<SelectableGitHubUser[] | null>>;
+  toggleGitHubUserSelection: (userId: number | string) => void;
+  toggleSelectAllGitHubUsers: () => void;
 }
 
 const GitHubUsersContext = createContext<GitHubUsersContextType | undefined>(
@@ -39,6 +41,28 @@ export default function GitHubUsersProvider({
     null
   );
 
+  function duplicateSelectedUsers() {
+    setGitHubUsers((prevState) => {
+      if (!prevState) {
+        return null;
+      }
+
+      return prevState.reduce<SelectableGitHubUser[]>((prev, user) => {
+        if (user.isSelected) {
+          const uniqueId = crypto.randomUUID();
+
+          return [
+            ...prev,
+            { ...user, isSelected: false },
+            { ...user, isSelected: false, uniqueId },
+          ];
+        }
+
+        return [...prev, user];
+      }, []);
+    });
+  }
+
   function removeSelectedUsers() {
     setGitHubUsers((prevState) => {
       if (!prevState) {
@@ -55,13 +79,15 @@ export default function GitHubUsersProvider({
     });
   }
 
-  const toggleGitHubUserSelection = useCallback((userId: number) => {
+  const toggleGitHubUserSelection = useCallback((userId: number | string) => {
     setGitHubUsers((prevState) => {
       if (!prevState) {
         return null;
       }
 
-      const userIndex = prevState.findIndex((user) => user.id === userId);
+      const userIndex = prevState.findIndex((user) =>
+        user.uniqueId ? user.uniqueId === userId : user.id === userId
+      );
 
       if (userIndex === -1) {
         return prevState;
@@ -94,11 +120,12 @@ export default function GitHubUsersProvider({
   return (
     <GitHubUsersContext.Provider
       value={{
+        duplicateSelectedUsers,
         gitHubUsers,
+        removeSelectedUsers,
         setGitHubUsers,
         toggleGitHubUserSelection,
         toggleSelectAllGitHubUsers,
-        removeSelectedUsers,
       }}
     >
       {children}
