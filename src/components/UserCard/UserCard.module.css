@@ -1,4 +1,4 @@
-.card {
+.user-card {
   position: relative;
   width: 100px;
   background-color: #d5d5d5;
@@ -7,11 +7,11 @@
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
 }
 
-.card-layout {
+.user-card-layout {
   padding: 10px 5px 15px 5px;
 }
 
-.card-checkbox {
+.user-card-checkbox {
   position: absolute;
   top: 8px;
   left: 8px;
@@ -25,11 +25,11 @@
   appearance: none;
 }
 
-.card-checkbox:checked {
+.user-card-checkbox:checked {
   background-color: #00a4ff;
 }
 
-.card-checkbox:checked::before {
+.user-card-checkbox:checked::before {
   content: "";
   position: absolute;
   top: -1px;
@@ -41,20 +41,20 @@
   transform: rotate(45deg);
 }
 
-.card-content {
+.user-card-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
 
-.card-avatar {
+.user-card-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
 
-.card-text-container p {
+.user-card-text-container p {
   font-size: 0.7rem;
   line-height: 1.1;
   margin: 0;
@@ -64,7 +64,7 @@
   text-overflow: ellipsis;
 }
 
-.card-button {
+.user-card-button {
   background-color: #00a1ff;
   padding: 5px;
   border-radius: 10%;
@@ -72,7 +72,7 @@
   font-size: 0.6rem;
 }
 
-.card-button:hover {
+.user-card-button:hover {
   background-color: #007acb;
   color: black;
 }

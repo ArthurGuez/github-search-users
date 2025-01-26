@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import type { GitHubUser } from "../services/search-users";
 import { searchUsers } from "../services/search-users";
 import { useDebounce } from "./useDebounce";
+import { useGitHubUserContext } from "../contexts/GitHubUserContext";
 
 export default function useSearchGitHubUsers(query: string) {
-  const [users, setUsers] = useState<GitHubUser[] | null>(null);
+  const { gitHubUsers, setGitHubUsers } = useGitHubUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const debouncedQuery = useDebounce(query);
 
   useEffect(() => {
     if (!debouncedQuery.trim()) {
-      setUsers(null);
+      setGitHubUsers(null);
       setError(null);
       setIsLoading(false);
 
@@ -26,20 +26,20 @@ export default function useSearchGitHubUsers(query: string) {
         const result = await searchUsers(debouncedQuery);
 
         if (result.success) {
-          setUsers(result.data);
+          setGitHubUsers(result.data);
         } else {
           setError(result.error);
         }
       } catch {
         setError("Failed to fetch users");
-        setUsers(null);
+        setGitHubUsers(null);
       } finally {
         setIsLoading(false);
       }
     };
 
     void fetchData();
-  }, [debouncedQuery]);
+  }, [debouncedQuery, setGitHubUsers]);
 
-  return { users, isLoading, error };
+  return { gitHubUsers, isLoading, error };
 }
