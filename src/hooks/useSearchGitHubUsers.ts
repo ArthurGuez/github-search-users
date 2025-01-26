@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { searchUsers } from "../services/search-users";
 import { useDebounce } from "./useDebounce";
-import { useGitHubUserContext } from "../contexts/GitHubUserContext";
+import { useGitHubUsersContext } from "../contexts/GitHubUsersContext";
 
 export default function useSearchGitHubUsers(query: string) {
-  const { gitHubUsers, setGitHubUsers } = useGitHubUserContext();
+  const { gitHubUsers, setGitHubUsers } = useGitHubUsersContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const debouncedQuery = useDebounce(query);

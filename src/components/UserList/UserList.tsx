@@ -1,4 +1,4 @@
-import { useGitHubUserContext } from "../../contexts/GitHubUserContext";
+import { useGitHubUsersContext } from "../../contexts/GitHubUsersContext";
 import useSearchGitHubUsers from "../../hooks/useSearchGitHubUsers";
 import UserCard from "../UserCard/UserCard";
 
@@ -10,7 +10,8 @@ interface Props {
 
 export default function UserList({ query }: Props) {
   const { gitHubUsers, isLoading, error } = useSearchGitHubUsers(query);
-  const { areAllSelected } = useGitHubUserContext();
+  const { toggleGitHubUserSelection, selectedGitHubUsers } =
+    useGitHubUsersContext();
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -34,7 +35,10 @@ export default function UserList({ query }: Props) {
         <UserCard
           key={gitHubUser.id}
           user={gitHubUser}
-          isSelected={areAllSelected}
+          isSelected={selectedGitHubUsers.includes(gitHubUser.id)}
+          toggleSelect={() => {
+            toggleGitHubUserSelection(gitHubUser.id);
+          }}
         />
       ))}
     </div>

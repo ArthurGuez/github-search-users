@@ -4,7 +4,7 @@ import UserList from "./components/UserList/UserList";
 
 import styles from "./App.module.css";
 import Actions from "./components/Actions/Actions";
-import GitHubUserProvider from "./contexts/GitHubUserContext";
+import GitHubUsersProvider from "./contexts/GitHubUsersContext";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -25,10 +25,10 @@ function App() {
             }}
           />
         </label>
-        <GitHubUserProvider>
+        <GitHubUsersProvider>
           <Actions onResetUsers={handleResetSearch} />
           <UserList query={query} />
-        </GitHubUserProvider>
+        </GitHubUsersProvider>
       </main>
     </div>
   );

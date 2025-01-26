@@ -2,27 +2,50 @@ import copyIcon from "../../assets/copy.svg";
 import binIcon from "../../assets/bin.svg";
 
 import styles from "./Actions.module.css";
-import { useGitHubUserContext } from "../../contexts/GitHubUserContext";
+import { useGitHubUsersContext } from "../../contexts/GitHubUsersContext";
+import { useEffect, useRef } from "react";
+import Checkbox from "../Checkbox/Checkbox";
 
 interface Props {
   onResetUsers: () => void;
 }
 
 export default function Actions({ onResetUsers }: Props) {
-  const { toggleSelectAll, setGitHubUsers } = useGitHubUserContext();
+  const {
+    gitHubUsers,
+    selectedGitHubUsers,
+    setGitHubUsers,
+    toggleSelectAllGitHubUsers,
+  } = useGitHubUsersContext();
+  const selectedGitHubUsersCount = selectedGitHubUsers.length;
+  const checkboxRef = useRef<HTMLInputElement | null>(null);
+
+  const areSomeGitHubUsersSelected =
+    (gitHubUsers &&
+      selectedGitHubUsers.length > 0 &&
+      gitHubUsers.length > selectedGitHubUsers.length) ??
+    false;
+
+  useEffect(() => {
+    if (checkboxRef.current) {
+      checkboxRef.current.indeterminate = areSomeGitHubUsersSelected;
+    }
+  }, [areSomeGitHubUsersSelected]);
 
   return (
     <div className={styles.actions}>
-      <div>
-        <label htmlFor="select-all"></label>
-        <input
-          aria-label="Select all profiles"
-          type="checkbox"
-          name="profile"
+      <div className={styles.actionsCheckboxContainer}>
+        <Checkbox
+          ariaLabel="Select all profiles"
+          checked={gitHubUsers?.length === selectedGitHubUsers.length}
+          disabled={!gitHubUsers}
           id="select-all"
-          onClick={toggleSelectAll}
+          onChange={toggleSelectAllGitHubUsers}
+          ref={checkboxRef}
         />
-        X elements selected
+        <span>{selectedGitHubUsersCount}&nbsp;</span>
+        element
+        {selectedGitHubUsersCount > 1 ? "s" : ""} selected
       </div>
       <div className={styles.actionButtons}>
         <img src={copyIcon} alt="Copy" width={23} height={23} />
