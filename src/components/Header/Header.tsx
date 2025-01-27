@@ -2,6 +2,9 @@ import { useEditMode } from "../../hooks/useEditMode";
 import Checkbox from "../Checkbox/Checkbox";
 import styles from "./Header.module.css";
 
+/**
+ * Displays page title and switch to toggle the edit mode
+ */
 export default function Header() {
   const { isEditMode, toggleEditMode } = useEditMode();
 

@@ -9,6 +9,9 @@ interface Props {
   user: SelectableGithubUser;
 }
 
+/**
+ * Displays the details for a specific user, with option to select it if in edit mode.
+ */
 export default function UserCard({ canSelect, user, toggleSelect }: Props) {
   return (
     <div className={styles.userCard}>

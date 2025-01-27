@@ -9,6 +9,10 @@ interface Props {
   query: string;
 }
 
+/**
+ * Displays a list of users based on the search query.
+ * Handles loading and error states.
+ */
 export default function UserList({ query }: Props) {
   const { isEditMode } = useEditMode();
   const { githubUsers, isLoading, error } = useSearchGithubUsers(query);

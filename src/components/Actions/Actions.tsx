@@ -10,6 +10,9 @@ interface Props {
   onResetUsers: () => void;
 }
 
+/**
+ * Displays actions such as duplicating and deleting selected users, and selecting all users.
+ */
 export default function Actions({ onResetUsers }: Props) {
   const {
     duplicateSelectedUsers,
