@@ -4,6 +4,7 @@ import styles from "./Checkbox.module.css";
 interface Props {
   ariaLabel: string;
   checked: boolean;
+  "data-testid"?: string;
   disabled?: boolean;
   id: string;
   name?: string;
@@ -17,6 +18,7 @@ const Checkbox = forwardRef(function Checkbox(
   {
     ariaLabel,
     checked,
+    "data-testid": dataTestid,
     disabled = false,
     id,
     name,
@@ -35,6 +37,7 @@ const Checkbox = forwardRef(function Checkbox(
         checked={checked}
         className={`${styles.checkbox} ${isSwitch ? styles.switch : ""}
         ${isInTopLeftCorner ? styles.topLeftCorner : ""}`}
+        data-testid={dataTestid}
         disabled={disabled}
         id={id}
         name={name}

@@ -50,7 +50,7 @@ export default function Actions({ onResetUsers }: Props) {
   }
 
   return (
-    <div className={styles.actions}>
+    <div className={styles.actions} data-testid="actions">
       <div className={styles.actionsCheckboxContainer}>
         <Checkbox
           ariaLabel="Select all profiles"
@@ -58,12 +58,15 @@ export default function Actions({ onResetUsers }: Props) {
             githubUsers?.length === selectedGithubUsersCount &&
             githubUsers.length !== 0
           }
+          data-testid="select-all-checkbox"
           disabled={areActionsDisabled}
           id="select-all"
           onChange={toggleSelectAllGithubUsers}
           ref={checkboxRef}
         />
-        <span>{selectedGithubUsersCount}&nbsp;</span>
+        <span data-testid="selected-users-count">
+          {selectedGithubUsersCount}&nbsp;
+        </span>
         element
         {selectedGithubUsersCount > 1 ? "s" : ""} selected
       </div>
@@ -71,6 +74,7 @@ export default function Actions({ onResetUsers }: Props) {
         <button
           aria-label="Duplicate selected users"
           className={styles.actionButton}
+          data-testid="duplicate-button"
           disabled={areActionButtonsDisabled}
           onClick={duplicateSelectedUsers}
         >
@@ -79,6 +83,7 @@ export default function Actions({ onResetUsers }: Props) {
         <button
           aria-label="Delete selected users"
           className={styles.actionButton}
+          data-testid="delete-button"
           disabled={areActionButtonsDisabled}
           onClick={handleDeleteUsers}
         >

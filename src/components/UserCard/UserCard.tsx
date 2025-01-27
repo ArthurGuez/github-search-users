@@ -14,13 +14,14 @@ interface Props {
  */
 export default function UserCard({ canSelect, user, toggleSelect }: Props) {
   return (
-    <div className={styles.userCard}>
+    <div className={styles.userCard} data-testid="user-card">
       <div className={styles.userCardLayout}>
         {canSelect && (
           <Checkbox
             ariaLabel={`Select profile of ${user.login}`}
             checked={user.isSelected}
-            id={`profile-${user.id.toString()}`}
+            data-testid="user-checkbox"
+            id={`user-${user.id.toString()}`}
             isInTopLeftCorner
             onChange={toggleSelect}
           />

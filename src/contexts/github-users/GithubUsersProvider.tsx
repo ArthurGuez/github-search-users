@@ -10,11 +10,13 @@ export interface SelectableGithubUser extends GithubUser {
 
 export default function GithubUsersProvider({
   children,
+  initialGithubUsers = null,
 }: {
   children: ReactNode;
+  initialGithubUsers?: SelectableGithubUser[] | null;
 }) {
   const [githubUsers, setGithubUsers] = useState<SelectableGithubUser[] | null>(
-    null
+    initialGithubUsers
   );
 
   function duplicateSelectedUsers() {

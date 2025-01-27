@@ -10,7 +10,7 @@ export default function EditModeProvider({
   const [isEditMode, setIsEditMode] = useState(false);
 
   const toggleEditMode = () => {
-    setIsEditMode((prev) => !prev);
+    setIsEditMode((prevState) => !prevState);
   };
 
   return (
