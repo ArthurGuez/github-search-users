@@ -24,12 +24,16 @@ export default function Actions({ onResetUsers }: Props) {
   const selectedGithubUsersCount =
     githubUsers?.filter((user) => user.isSelected).length ?? 0;
 
-  const checkboxRef = useRef<HTMLInputElement | null>(null);
+  const areActionsDisabled = !githubUsers || githubUsers.length === 0;
+  const areActionButtonsDisabled =
+    areActionsDisabled || selectedGithubUsersCount === 0;
 
   const areSomeGithubUsersSelected = githubUsers
     ? selectedGithubUsersCount > 0 &&
       selectedGithubUsersCount < githubUsers.length
     : false;
+
+  const checkboxRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (checkboxRef.current) {
@@ -50,8 +54,11 @@ export default function Actions({ onResetUsers }: Props) {
       <div className={styles.actionsCheckboxContainer}>
         <Checkbox
           ariaLabel="Select all profiles"
-          checked={githubUsers?.length === selectedGithubUsersCount}
-          disabled={!githubUsers}
+          checked={
+            githubUsers?.length === selectedGithubUsersCount &&
+            githubUsers.length !== 0
+          }
+          disabled={areActionsDisabled}
           id="select-all"
           onChange={toggleSelectAllGithubUsers}
           ref={checkboxRef}
@@ -64,15 +71,15 @@ export default function Actions({ onResetUsers }: Props) {
         <button
           aria-label="Duplicate selected users"
           className={styles.actionButton}
-          onClick={() => {
-            duplicateSelectedUsers();
-          }}
+          disabled={areActionButtonsDisabled}
+          onClick={duplicateSelectedUsers}
         >
           <img alt="Duplicate" height={23} src={duplicateIcon} width={23} />
         </button>
         <button
           aria-label="Delete selected users"
           className={styles.actionButton}
+          disabled={areActionButtonsDisabled}
           onClick={handleDeleteUsers}
         >
           <img alt="Delete" height={23} src={binIcon} width={23} />
