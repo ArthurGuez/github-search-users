@@ -4,6 +4,9 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import react from "eslint-plugin-react";
+import testingLibrary from "eslint-plugin-testing-library";
+import jestDom from "eslint-plugin-jest-dom";
+import vitest from "@vitest/eslint-plugin";
 
 export default tseslint.config(
   { ignores: ["dist"] },
@@ -39,5 +42,11 @@ export default tseslint.config(
       ],
       "react/jsx-sort-props": ["error", { reservedFirst: ["key"] }],
     },
+  },
+  {
+    files: ["**/*.test.tsx"],
+    ...vitest.configs.recommended,
+    ...testingLibrary.configs["flat/react"],
+    ...jestDom.configs["flat/recommended"],
   }
 );
