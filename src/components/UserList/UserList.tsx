@@ -1,6 +1,6 @@
-import { useEditMode } from "../../contexts/EditModeContext";
-import { useGitHubUsersContext } from "../../contexts/GitHubUsersContext";
-import useSearchGitHubUsers from "../../hooks/useSearchGitHubUsers";
+import { useEditMode } from "../../hooks/useEditMode";
+import { useGithubUsers } from "../../hooks/useGithubUsers";
+import useSearchGithubUsers from "../../hooks/useSearchGithubUsers";
 import UserCard from "../UserCard/UserCard";
 
 import styles from "./UserList.module.css";
@@ -11,8 +11,8 @@ interface Props {
 
 export default function UserList({ query }: Props) {
   const { isEditMode } = useEditMode();
-  const { gitHubUsers, isLoading, error } = useSearchGitHubUsers(query);
-  const { toggleGitHubUserSelection } = useGitHubUsersContext();
+  const { githubUsers, isLoading, error } = useSearchGithubUsers(query);
+  const { toggleGithubUserSelection } = useGithubUsers();
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -22,23 +22,23 @@ export default function UserList({ query }: Props) {
     return <p>{error}</p>;
   }
 
-  if (!gitHubUsers) {
+  if (!githubUsers) {
     return <p>You search results will be displayed here</p>;
   }
 
-  if (gitHubUsers.length === 0) {
+  if (githubUsers.length === 0) {
     return <p>No user found</p>;
   }
 
   return (
     <div className={styles.userList}>
-      {gitHubUsers.map((gitHubUser) => (
+      {githubUsers.map((githubUser) => (
         <UserCard
-          key={gitHubUser.uniqueId ?? gitHubUser.id}
+          key={githubUser.uniqueId ?? githubUser.id}
           canSelect={isEditMode}
-          user={gitHubUser}
+          user={githubUser}
           toggleSelect={() => {
-            toggleGitHubUserSelection(gitHubUser.uniqueId ?? gitHubUser.id);
+            toggleGithubUserSelection(githubUser.uniqueId ?? githubUser.id);
           }}
         />
       ))}

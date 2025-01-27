@@ -1,4 +1,4 @@
-import type { SelectableGitHubUser } from "../../contexts/GitHubUsersContext";
+import type { SelectableGithubUser } from "../../contexts/github-users/GithubUsersProvider";
 import Checkbox from "../Checkbox/Checkbox";
 
 import styles from "./UserCard.module.css";
@@ -6,7 +6,7 @@ import styles from "./UserCard.module.css";
 interface Props {
   canSelect: boolean;
   toggleSelect: () => void;
-  user: SelectableGitHubUser;
+  user: SelectableGithubUser;
 }
 
 export default function UserCard({ canSelect, user, toggleSelect }: Props) {

@@ -4,8 +4,8 @@ import UserList from "./components/UserList/UserList";
 
 import styles from "./App.module.css";
 import Actions from "./components/Actions/Actions";
-import GitHubUsersProvider from "./contexts/GitHubUsersContext";
-import { useEditMode } from "./contexts/EditModeContext";
+import GithubUsersProvider from "./contexts/github-users/GithubUsersProvider";
+import { useEditMode } from "./hooks/useEditMode";
 
 function App() {
   const { isEditMode } = useEditMode();
@@ -27,10 +27,10 @@ function App() {
             }}
           />
         </label>
-        <GitHubUsersProvider>
+        <GithubUsersProvider>
           {isEditMode && <Actions onResetUsers={handleResetSearch} />}
           <UserList query={query} />
-        </GitHubUsersProvider>
+        </GithubUsersProvider>
       </main>
     </>
   );

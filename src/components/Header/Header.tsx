@@ -1,4 +1,4 @@
-import { useEditMode } from "../../contexts/EditModeContext";
+import { useEditMode } from "../../hooks/useEditMode";
 import Checkbox from "../Checkbox/Checkbox";
 import styles from "./Header.module.css";
 
@@ -7,7 +7,7 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <h1 className={styles.headerTitle}>GitHub Search</h1>
+      <h1 className={styles.headerTitle}>Github Search</h1>
       <div className={styles.headerCheckbox}>
         <Checkbox
           ariaLabel="Toggle edit mode"

@@ -2,9 +2,9 @@ import duplicateIcon from "../../assets/duplicate.svg";
 import binIcon from "../../assets/bin.svg";
 
 import styles from "./Actions.module.css";
-import { useGitHubUsersContext } from "../../contexts/GitHubUsersContext";
 import { useEffect, useRef } from "react";
 import Checkbox from "../Checkbox/Checkbox";
+import { useGithubUsers } from "../../hooks/useGithubUsers";
 
 interface Props {
   onResetUsers: () => void;
@@ -13,31 +13,31 @@ interface Props {
 export default function Actions({ onResetUsers }: Props) {
   const {
     duplicateSelectedUsers,
-    gitHubUsers,
+    githubUsers,
     removeSelectedUsers,
-    toggleSelectAllGitHubUsers,
-  } = useGitHubUsersContext();
+    toggleSelectAllGithubUsers,
+  } = useGithubUsers();
 
-  const selectedGitHubUsersCount =
-    gitHubUsers?.filter((user) => user.isSelected).length ?? 0;
+  const selectedGithubUsersCount =
+    githubUsers?.filter((user) => user.isSelected).length ?? 0;
 
   const checkboxRef = useRef<HTMLInputElement | null>(null);
 
-  const areSomeGitHubUsersSelected = gitHubUsers
-    ? selectedGitHubUsersCount > 0 &&
-      selectedGitHubUsersCount < gitHubUsers.length
+  const areSomeGithubUsersSelected = githubUsers
+    ? selectedGithubUsersCount > 0 &&
+      selectedGithubUsersCount < githubUsers.length
     : false;
 
   useEffect(() => {
     if (checkboxRef.current) {
-      checkboxRef.current.indeterminate = areSomeGitHubUsersSelected;
+      checkboxRef.current.indeterminate = areSomeGithubUsersSelected;
     }
-  }, [areSomeGitHubUsersSelected]);
+  }, [areSomeGithubUsersSelected]);
 
   function handleDeleteUsers() {
     removeSelectedUsers();
 
-    if (gitHubUsers?.length === selectedGitHubUsersCount) {
+    if (githubUsers?.length === selectedGithubUsersCount) {
       onResetUsers();
     }
   }
@@ -47,15 +47,15 @@ export default function Actions({ onResetUsers }: Props) {
       <div className={styles.actionsCheckboxContainer}>
         <Checkbox
           ariaLabel="Select all profiles"
-          checked={gitHubUsers?.length === selectedGitHubUsersCount}
-          disabled={!gitHubUsers}
+          checked={githubUsers?.length === selectedGithubUsersCount}
+          disabled={!githubUsers}
           id="select-all"
-          onChange={toggleSelectAllGitHubUsers}
+          onChange={toggleSelectAllGithubUsers}
           ref={checkboxRef}
         />
-        <span>{selectedGitHubUsersCount}&nbsp;</span>
+        <span>{selectedGithubUsersCount}&nbsp;</span>
         element
-        {selectedGitHubUsersCount > 1 ? "s" : ""} selected
+        {selectedGithubUsersCount > 1 ? "s" : ""} selected
       </div>
       <div className={styles.actionButtons}>
         <button

@@ -1,10 +1,10 @@
-interface GitHubSearchResponse {
+interface GithubSearchResponse {
   incomplete_results: boolean;
-  items: GitHubUser[];
+  items: GithubUser[];
   total_count: number;
 }
 
-export interface GitHubUser {
+export interface GithubUser {
   avatar_url: string;
   html_url: string;
   id: number;
@@ -13,7 +13,7 @@ export interface GitHubUser {
 }
 
 type SearchUsersResult =
-  | { success: true; data: GitHubUser[] }
+  | { success: true; data: GithubUser[] }
   | { success: false; error: string };
 
 export async function searchUsers(query: string): Promise<SearchUsersResult> {
@@ -41,10 +41,10 @@ export async function searchUsers(query: string): Promise<SearchUsersResult> {
         };
       }
 
-      return { success: false, error: "Failed to fetch data from GitHub API" };
+      return { success: false, error: "Failed to fetch data from Github API" };
     }
 
-    const data = (await response.json()) as GitHubSearchResponse;
+    const data = (await response.json()) as GithubSearchResponse;
 
     return { success: true, data: data.items };
   } catch (error) {
