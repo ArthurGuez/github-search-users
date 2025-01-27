@@ -24,9 +24,9 @@ export default function UserCard({ canSelect, user, toggleSelect }: Props) {
         )}
         <div className={styles.userCardContent}>
           <img
+            alt={user.login}
             className={styles.userCardAvatar}
             src={user.avatar_url}
-            alt={user.login}
           />
           <div className={styles.userCardTextContainer}>
             <p>{user.id}</p>
@@ -35,8 +35,8 @@ export default function UserCard({ canSelect, user, toggleSelect }: Props) {
           <a
             className={styles.userCardButton}
             href={user.html_url}
-            target="_blank"
             rel="noopener noreferrer"
+            target="_blank"
           >
             View profile
           </a>

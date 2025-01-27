@@ -37,6 +37,7 @@ export default tseslint.config(
         "warn",
         { allowConstantExport: true },
       ],
+      "react/jsx-sort-props": ["error", { reservedFirst: ["key"] }],
     },
   }
 );

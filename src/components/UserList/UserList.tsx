@@ -36,10 +36,10 @@ export default function UserList({ query }: Props) {
         <UserCard
           key={githubUser.uniqueId ?? githubUser.id}
           canSelect={isEditMode}
-          user={githubUser}
           toggleSelect={() => {
             toggleGithubUserSelection(githubUser.uniqueId ?? githubUser.id);
           }}
+          user={githubUser}
         />
       ))}
     </div>

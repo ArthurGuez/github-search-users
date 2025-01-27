@@ -59,20 +59,20 @@ export default function Actions({ onResetUsers }: Props) {
       </div>
       <div className={styles.actionButtons}>
         <button
+          aria-label="Duplicate selected users"
+          className={styles.actionButton}
           onClick={() => {
             duplicateSelectedUsers();
           }}
-          className={styles.actionButton}
-          aria-label="Duplicate selected users"
         >
-          <img src={duplicateIcon} alt="Duplicate" width={23} height={23} />
+          <img alt="Duplicate" height={23} src={duplicateIcon} width={23} />
         </button>
         <button
-          onClick={handleDeleteUsers}
-          className={styles.actionButton}
           aria-label="Delete selected users"
+          className={styles.actionButton}
+          onClick={handleDeleteUsers}
         >
-          <img src={binIcon} alt="Delete" width={23} height={23} />
+          <img alt="Delete" height={23} src={binIcon} width={23} />
         </button>
       </div>
     </div>

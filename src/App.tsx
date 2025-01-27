@@ -21,10 +21,10 @@ function App() {
       <main className={styles.layout}>
         <label className={styles.search}>
           <input
-            value={query}
             onChange={(e) => {
               setQuery(e.target.value);
             }}
+            value={query}
           />
         </label>
         <GithubUsersProvider>
