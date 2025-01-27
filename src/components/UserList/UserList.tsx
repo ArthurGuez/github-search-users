@@ -1,3 +1,4 @@
+import { useEditMode } from "../../contexts/EditModeContext";
 import { useGitHubUsersContext } from "../../contexts/GitHubUsersContext";
 import useSearchGitHubUsers from "../../hooks/useSearchGitHubUsers";
 import UserCard from "../UserCard/UserCard";
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export default function UserList({ query }: Props) {
+  const { isEditMode } = useEditMode();
   const { gitHubUsers, isLoading, error } = useSearchGitHubUsers(query);
   const { toggleGitHubUserSelection } = useGitHubUsersContext();
 
@@ -33,6 +35,7 @@ export default function UserList({ query }: Props) {
       {gitHubUsers.map((gitHubUser) => (
         <UserCard
           key={gitHubUser.uniqueId ?? gitHubUser.id}
+          canSelect={isEditMode}
           user={gitHubUser}
           toggleSelect={() => {
             toggleGitHubUserSelection(gitHubUser.uniqueId ?? gitHubUser.id);

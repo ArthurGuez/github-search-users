@@ -4,21 +4,24 @@ import Checkbox from "../Checkbox/Checkbox";
 import styles from "./UserCard.module.css";
 
 interface Props {
+  canSelect: boolean;
   toggleSelect: () => void;
   user: SelectableGitHubUser;
 }
 
-export default function UserCard({ user, toggleSelect }: Props) {
+export default function UserCard({ canSelect, user, toggleSelect }: Props) {
   return (
     <div className={styles.userCard}>
       <div className={styles.userCardLayout}>
-        <Checkbox
-          ariaLabel={`Select profile of ${user.login}`}
-          checked={user.isSelected}
-          id={`profile-${user.id.toString()}`}
-          isInTopLeftCorner
-          onChange={toggleSelect}
-        />
+        {canSelect && (
+          <Checkbox
+            ariaLabel={`Select profile of ${user.login}`}
+            checked={user.isSelected}
+            id={`profile-${user.id.toString()}`}
+            isInTopLeftCorner
+            onChange={toggleSelect}
+          />
+        )}
         <div className={styles.userCardContent}>
           <img
             className={styles.userCardAvatar}

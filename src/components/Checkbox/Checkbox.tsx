@@ -9,6 +9,7 @@ interface Props {
   name?: string;
   label?: string;
   isInTopLeftCorner?: boolean;
+  isSwitch?: boolean;
   onChange: () => void;
 }
 
@@ -21,6 +22,7 @@ const Checkbox = forwardRef(function Checkbox(
     name,
     label = "",
     isInTopLeftCorner = false,
+    isSwitch = false,
     onChange,
   }: Props,
   ref?: ForwardedRef<HTMLInputElement>
@@ -31,9 +33,8 @@ const Checkbox = forwardRef(function Checkbox(
       <input
         aria-label={ariaLabel}
         checked={checked}
-        className={`${styles.checkbox} ${
-          isInTopLeftCorner ? styles.topLeftCorner : ""
-        }`}
+        className={`${styles.checkbox} ${isSwitch ? styles.switch : ""}
+        ${isInTopLeftCorner ? styles.topLeftCorner : ""}`}
         disabled={disabled}
         id={id}
         name={name}

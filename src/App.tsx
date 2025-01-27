@@ -5,8 +5,10 @@ import UserList from "./components/UserList/UserList";
 import styles from "./App.module.css";
 import Actions from "./components/Actions/Actions";
 import GitHubUsersProvider from "./contexts/GitHubUsersContext";
+import { useEditMode } from "./contexts/EditModeContext";
 
 function App() {
+  const { isEditMode } = useEditMode();
   const [query, setQuery] = useState("");
 
   function handleResetSearch() {
@@ -14,7 +16,7 @@ function App() {
   }
 
   return (
-    <div>
+    <>
       <Header />
       <main className={styles.layout}>
         <label className={styles.search}>
@@ -26,11 +28,11 @@ function App() {
           />
         </label>
         <GitHubUsersProvider>
-          <Actions onResetUsers={handleResetSearch} />
+          {isEditMode && <Actions onResetUsers={handleResetSearch} />}
           <UserList query={query} />
         </GitHubUsersProvider>
       </main>
-    </div>
+    </>
   );
 }
 
