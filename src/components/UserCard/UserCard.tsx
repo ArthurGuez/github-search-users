@@ -28,7 +28,7 @@ export default function UserCard({ canSelect, user, toggleSelect }: Props) {
         )}
         <div className={styles.userCardContent}>
           <img
-            alt={user.login}
+            alt={`${user.login} avatar`}
             className={styles.userCardAvatar}
             src={user.avatar_url}
           />

@@ -78,7 +78,7 @@ export default function Actions({ onResetUsers }: Props) {
           disabled={areActionButtonsDisabled}
           onClick={duplicateSelectedUsers}
         >
-          <img alt="Duplicate" height={23} src={duplicateIcon} width={23} />
+          <img alt="" height={23} src={duplicateIcon} width={23} />
         </button>
         <button
           aria-label="Delete selected users"
@@ -87,7 +87,7 @@ export default function Actions({ onResetUsers }: Props) {
           disabled={areActionButtonsDisabled}
           onClick={handleDeleteUsers}
         >
-          <img alt="Delete" height={23} src={binIcon} width={23} />
+          <img alt="" height={23} src={binIcon} width={23} />
         </button>
       </div>
     </div>

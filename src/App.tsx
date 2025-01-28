@@ -19,8 +19,10 @@ function App() {
     <>
       <Header />
       <main className={styles.layout} data-testid="app">
-        <label className={styles.search}>
+        <label className={styles.search} htmlFor="search-input">
           <input
+            aria-label="Search for a user"
+            id="search-input"
             onChange={(e) => {
               setQuery(e.target.value);
             }}
@@ -28,6 +30,7 @@ function App() {
             value={query}
           />
         </label>
+
         <GithubUsersProvider>
           {isEditMode && <Actions onResetUsers={handleResetSearch} />}
           <UserList query={query} />
