@@ -24,6 +24,7 @@ function App() {
             onChange={(e) => {
               setQuery(e.target.value);
             }}
+            placeholder="Search for a user"
             value={query}
           />
         </label>
