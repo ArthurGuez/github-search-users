@@ -31,11 +31,11 @@ export default function UserList({ query }: Props) {
   }
 
   if (githubUsers.length === 0) {
-    return <p>No user found</p>;
+    return <p data-testid="no-user">No user found</p>;
   }
 
   return (
-    <div className={styles.userList}>
+    <div className={styles.userList} data-testid="user-list">
       {githubUsers.map((githubUser) => (
         <UserCard
           key={githubUser.uniqueId ?? githubUser.id}

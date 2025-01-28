@@ -4,10 +4,12 @@ import { EditModeContext } from "./editModeContext";
 
 export default function EditModeProvider({
   children,
+  isEnabled = false,
 }: {
   children: ReactNode;
+  isEnabled?: boolean;
 }) {
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(isEnabled);
 
   const toggleEditMode = () => {
     setIsEditMode((prevState) => !prevState);

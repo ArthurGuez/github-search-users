@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <Header />
-      <main className={styles.layout}>
+      <main className={styles.layout} data-testid="app">
         <label className={styles.search}>
           <input
             onChange={(e) => {

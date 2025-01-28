@@ -3,7 +3,7 @@ import EditModeProvider from "../../contexts/edit-mode/EditModeProvider";
 import Header from "./Header";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-describe("Header component", () => {
+describe("Header", () => {
   it("should render", () => {
     render(
       <EditModeProvider>
