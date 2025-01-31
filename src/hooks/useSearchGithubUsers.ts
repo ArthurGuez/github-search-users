@@ -3,14 +3,18 @@ import { searchUsers } from "../services/search-users";
 import { useDebounce } from "./useDebounce";
 import { useGithubUsers } from "./useGithubUsers";
 
-export default function useSearchGithubUsers(query: string) {
+/**
+ * Search Github users with a debounced search term.
+ * Returns the list of Github users, loading state, and any error message.
+ */
+export default function useSearchGithubUsers(searchTerm: string) {
   const { githubUsers, setGithubUsers } = useGithubUsers();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const debouncedQuery = useDebounce(query);
+  const debouncedSearchTerm = useDebounce(searchTerm);
 
   useEffect(() => {
-    if (!debouncedQuery.trim()) {
+    if (!debouncedSearchTerm.trim()) {
       setGithubUsers(null);
       setError(null);
       setIsLoading(false);
@@ -23,7 +27,7 @@ export default function useSearchGithubUsers(query: string) {
       setError(null);
 
       try {
-        const result = await searchUsers(debouncedQuery);
+        const result = await searchUsers(debouncedSearchTerm);
 
         if (result.success) {
           setGithubUsers(
@@ -44,7 +48,7 @@ export default function useSearchGithubUsers(query: string) {
     };
 
     void fetchData();
-  }, [debouncedQuery, setGithubUsers]);
+  }, [debouncedSearchTerm, setGithubUsers]);
 
   return { githubUsers, isLoading, error };
 }

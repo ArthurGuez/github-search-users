@@ -5,10 +5,3 @@
 .layout {
   padding: 0 20px;
 }
-
-.search {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 64px;
-}

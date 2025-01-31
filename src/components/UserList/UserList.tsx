@@ -6,16 +6,16 @@ import UserCard from "../UserCard/UserCard";
 import styles from "./UserList.module.css";
 
 interface Props {
-  query: string;
+  searchTerm: string;
 }
 
 /**
- * Displays a list of users based on the search query.
+ * Displays a list of users based on the search term.
  * Handles loading and error states.
  */
-export default function UserList({ query }: Props) {
+export default function UserList({ searchTerm }: Props) {
   const { isEditMode } = useEditMode();
-  const { githubUsers, isLoading, error } = useSearchGithubUsers(query);
+  const { githubUsers, isLoading, error } = useSearchGithubUsers(searchTerm);
   const { toggleGithubUserSelection } = useGithubUsers();
 
   if (isLoading) {

@@ -3,8 +3,8 @@ import EditModeProvider from "../../contexts/edit-mode/EditModeProvider";
 import UserList from "./UserList";
 import { render, screen } from "@testing-library/react";
 import GithubUsersProvider from "../../contexts/github-users/GithubUsersProvider";
-import useSearchGithubUsers from "../../hooks/useSearchGithubUsers";
 import { MOCK_SELECTABLE_GITHUB_USERS } from "../../__mocks__/github";
+import useSearchGithubUsers from "../../hooks/useSearchGithubUsers";
 
 vi.mock("../../hooks/useSearchGithubUsers", () => ({
   default: vi.fn(),
@@ -12,7 +12,7 @@ vi.mock("../../hooks/useSearchGithubUsers", () => ({
 
 const mockUseSearchGithubUsers = vi.mocked(useSearchGithubUsers);
 
-const QUERY = "Arthur";
+const SEARCH_TERM = "Arthur";
 
 describe("UserList", () => {
   it("should display a loading state when isLoading is true", () => {
@@ -25,7 +25,7 @@ describe("UserList", () => {
     render(
       <EditModeProvider>
         <GithubUsersProvider>
-          <UserList query={QUERY} />
+          <UserList searchTerm={SEARCH_TERM} />
         </GithubUsersProvider>
       </EditModeProvider>
     );
@@ -43,7 +43,7 @@ describe("UserList", () => {
     render(
       <EditModeProvider>
         <GithubUsersProvider>
-          <UserList query={QUERY} />
+          <UserList searchTerm={SEARCH_TERM} />
         </GithubUsersProvider>
       </EditModeProvider>
     );
@@ -61,7 +61,7 @@ describe("UserList", () => {
     render(
       <EditModeProvider>
         <GithubUsersProvider>
-          <UserList query={QUERY} />
+          <UserList searchTerm={SEARCH_TERM} />
         </GithubUsersProvider>
       </EditModeProvider>
     );
@@ -79,7 +79,7 @@ describe("UserList", () => {
     render(
       <EditModeProvider>
         <GithubUsersProvider>
-          <UserList query={QUERY} />
+          <UserList searchTerm={SEARCH_TERM} />
         </GithubUsersProvider>
       </EditModeProvider>
     );
