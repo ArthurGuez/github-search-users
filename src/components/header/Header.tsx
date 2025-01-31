@@ -1,4 +1,4 @@
-import { useEditMode } from "../../hooks/useEditMode";
+import { useEditMode } from "../../contexts/edit-mode/useEditMode";
 import Checkbox from "../checkbox/Checkbox";
 import styles from "./Header.module.css";
 

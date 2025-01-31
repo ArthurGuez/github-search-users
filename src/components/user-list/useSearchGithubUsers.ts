@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { searchUsers } from "../services/search-users";
-import { useDebounce } from "./useDebounce";
-import { useGithubUsers } from "./useGithubUsers";
+import { searchUsers } from "../../services/search-users";
+import { useDebounce } from "../../hooks/useDebounce";
+import { useGithubUsers } from "../../contexts/github-users/useGithubUsers";
 
 /**
  * Search Github users with a debounced search term.

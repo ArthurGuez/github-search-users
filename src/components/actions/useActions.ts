@@ -1,4 +1,4 @@
-import { useGithubUsers } from "../../hooks/useGithubUsers";
+import { useGithubUsers } from "../../contexts/github-users/useGithubUsers";
 
 export function useActions(onResetUsers: () => void) {
   const {

@@ -4,7 +4,7 @@ import UserList from "./components/user-list/UserList";
 import styles from "./App.module.css";
 import Actions from "./components/actions/Actions";
 import GithubUsersProvider from "./contexts/github-users/GithubUsersProvider";
-import { useEditMode } from "./hooks/useEditMode";
+import { useEditMode } from "./contexts/edit-mode/useEditMode";
 import { useSearchTerm } from "./hooks/useSearchTerm";
 import Search from "./components/search/Search";
 

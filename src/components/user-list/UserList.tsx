@@ -1,6 +1,6 @@
-import { useEditMode } from "../../hooks/useEditMode";
-import { useGithubUsers } from "../../hooks/useGithubUsers";
-import useSearchGithubUsers from "../../hooks/useSearchGithubUsers";
+import { useEditMode } from "../../contexts/edit-mode/useEditMode";
+import { useGithubUsers } from "../../contexts/github-users/useGithubUsers";
+import useSearchGithubUsers from "./useSearchGithubUsers";
 import UserCard from "../user-card/UserCard";
 
 import styles from "./UserList.module.css";

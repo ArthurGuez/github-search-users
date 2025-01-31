@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { EditModeContext } from "../contexts/edit-mode/editModeContext";
+import { EditModeContext } from "./editModeContext";
 
 export function useEditMode() {
   const context = useContext(EditModeContext);

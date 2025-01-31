@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GithubUsersContext } from "../contexts/github-users/githubUsersContext";
+import { GithubUsersContext } from "./githubUsersContext";
 
 export function useGithubUsers() {
   const context = useContext(GithubUsersContext);

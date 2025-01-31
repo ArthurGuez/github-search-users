@@ -4,9 +4,9 @@ import UserList from "./UserList";
 import { render, screen } from "@testing-library/react";
 import GithubUsersProvider from "../../contexts/github-users/GithubUsersProvider";
 import { MOCK_SELECTABLE_GITHUB_USERS } from "../../__mocks__/github";
-import useSearchGithubUsers from "../../hooks/useSearchGithubUsers";
+import useSearchGithubUsers from "./useSearchGithubUsers";
 
-vi.mock("../../hooks/useSearchGithubUsers", () => ({
+vi.mock("./useSearchGithubUsers", () => ({
   default: vi.fn(),
 }));
 
