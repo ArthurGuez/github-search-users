@@ -1,5 +1,5 @@
 import type { SelectableGithubUser } from "../../contexts/github-users/GithubUsersProvider";
-import Checkbox from "../Checkbox/Checkbox";
+import Checkbox from "../checkbox/Checkbox";
 
 import styles from "./UserCard.module.css";
 

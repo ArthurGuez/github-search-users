@@ -3,7 +3,7 @@ import binIcon from "../../assets/bin.svg";
 
 import styles from "./Actions.module.css";
 import { useEffect, useRef } from "react";
-import Checkbox from "../Checkbox/Checkbox";
+import Checkbox from "../checkbox/Checkbox";
 import { useGithubUsers } from "../../hooks/useGithubUsers";
 
 interface Props {
