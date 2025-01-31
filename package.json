@@ -8,7 +8,16 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint ."
+    ],
+    "*.tsx": [
+      "eslint ."
+    ]
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -30,7 +39,9 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "eslint-plugin-testing-library": "^7.1.1",
     "globals": "^15.14.0",
+    "husky": "^9.1.7",
     "jsdom": "^26.0.0",
+    "lint-staged": "^15.4.3",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5",
