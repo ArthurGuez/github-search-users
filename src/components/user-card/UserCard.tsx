@@ -21,7 +21,7 @@ export default function UserCard({ canSelect, user, toggleSelect }: Props) {
             ariaLabel={`Select profile of ${user.login}`}
             checked={user.isSelected}
             data-testid="user-checkbox"
-            id={`user-${user.id.toString()}`}
+            id={`user-${user.id}`}
             isInTopLeftCorner
             onChange={toggleSelect}
           />

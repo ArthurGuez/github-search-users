@@ -31,9 +31,7 @@ export async function searchUsers(query: string): Promise<SearchUsersResult> {
         );
         const currentTime = new Date();
         const timeRemaining = resetTime.getTime() - currentTime.getTime();
-        const secondsLeft = Math.floor(
-          (timeRemaining % 60_000) / 1_000
-        ).toString();
+        const secondsLeft = Math.floor((timeRemaining % 60_000) / 1_000);
 
         return {
           success: false,
