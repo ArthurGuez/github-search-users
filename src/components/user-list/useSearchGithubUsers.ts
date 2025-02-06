@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { searchUsers } from "../../services/search-users";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useGithubUsers } from "../../contexts/github-users/useGithubUsers";
+import { isAbortError } from "../../utils";
 
 /**
  * Search Github users with a debounced search term.
@@ -22,12 +23,19 @@ export default function useSearchGithubUsers(searchTerm: string) {
       return;
     }
 
+    const controller = new AbortController();
+    const { signal } = controller;
+
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
 
       try {
-        const result = await searchUsers(debouncedSearchTerm);
+        const result = await searchUsers(debouncedSearchTerm, signal);
+
+        if (signal.aborted) {
+          return;
+        }
 
         if (result.success) {
           setGithubUsers(
@@ -39,7 +47,11 @@ export default function useSearchGithubUsers(searchTerm: string) {
         } else {
           setError(result.error);
         }
-      } catch {
+      } catch (error) {
+        if (isAbortError(error)) {
+          return;
+        }
+
         setError("Failed to fetch users");
         setGithubUsers(null);
       } finally {
@@ -48,6 +60,10 @@ export default function useSearchGithubUsers(searchTerm: string) {
     };
 
     void fetchData();
+
+    return () => {
+      controller.abort();
+    };
   }, [debouncedSearchTerm, setGithubUsers]);
 
   return { githubUsers, isLoading, error };

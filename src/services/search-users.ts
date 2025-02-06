@@ -1,3 +1,5 @@
+import { isAbortError } from "../utils";
+
 interface GithubSearchResponse {
   incomplete_results: boolean;
   items: GithubUser[];
@@ -16,13 +18,16 @@ type SearchUsersResult =
   | { success: true; data: GithubUser[] }
   | { success: false; error: string };
 
-export async function searchUsers(query: string): Promise<SearchUsersResult> {
+export async function searchUsers(
+  query: string,
+  signal: AbortSignal
+): Promise<SearchUsersResult> {
   const url = `https://api.github.com/search/users?q=${encodeURIComponent(
     query
   )}`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { signal });
 
     if (!response.ok) {
       if (response.status === 403) {
@@ -46,6 +51,10 @@ export async function searchUsers(query: string): Promise<SearchUsersResult> {
 
     return { success: true, data: data.items };
   } catch (error) {
+    if (isAbortError(error)) {
+      return { success: false, error: "Request was aborted" };
+    }
+
     console.error("Error fetching users:", error);
 
     return {
